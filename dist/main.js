@@ -4,6 +4,7 @@ if (gallery) {
   const tabs = Array.from(list.querySelectorAll('[data-show]'));
   const panels = Array.from(gallery.querySelectorAll('[data-panel]'));
   list.setAttribute('role', 'tablist');
+  list.setAttribute('aria-label', list.dataset.label);
   tabs.forEach((tab, i) => {
     tab.setAttribute('role', 'tab');
     tab.id = `tab-${tab.dataset.show}`;
@@ -24,7 +25,9 @@ if (gallery) {
 
   function selectFromLocation() {
     const index = panels.findIndex((panel) => `#${panel.id}` === location.hash);
-    if (index >= 0) selectTab(index);
+    if (index < 0) return;
+    selectTab(index);
+    requestAnimationFrame(() => panels[index].scrollIntoView({ block: 'start' }));
   }
 
   selectTab(0);
@@ -41,12 +44,18 @@ if (gallery) {
       activate(index);
     });
     tab.addEventListener('keydown', (event) => {
-      const targets = { ArrowRight: (index + 1) % tabs.length, ArrowLeft: (index + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1 };
+      const targets = { ArrowRight: (index + 1) % tabs.length, ArrowLeft: (index + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1, ' ': index };
       if (!(event.key in targets)) return;
       event.preventDefault();
       activate(targets[event.key]);
     });
   }
+}
+
+for (const link of document.querySelectorAll('.langs a')) {
+  link.addEventListener('click', () => {
+    link.hash = location.hash;
+  });
 }
 
 const form = document.querySelector('[data-request]');
@@ -60,11 +69,17 @@ for (const button of document.querySelectorAll('[data-plan]')) {
   });
 }
 
-for (const link of document.querySelectorAll('[data-model], [data-package]')) {
-  link.addEventListener('click', () => {
-    const field = link.hasAttribute('data-model') ? 'model' : 'package';
-    form.elements.namedItem(field).value = link.dataset[field];
+for (const link of document.querySelectorAll('a[href="#request"]')) {
+  link.addEventListener('click', (event) => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    for (const field of ['model', 'package']) {
+      if (link.dataset[field] !== undefined) {
+        form.elements.namedItem(field).value = link.dataset[field];
+        clearRequest();
+      }
+    }
     if (dialog?.open) dialog.close();
+    document.querySelector('#request').focus({ preventScroll: true });
   });
 }
 
@@ -83,6 +98,17 @@ function setPlaceError(message) {
 place?.addEventListener('invalid', () => setPlaceError(form.dataset.required));
 place?.addEventListener('input', () => setPlaceError(''));
 
+const result = form?.querySelector('[data-result]');
+function clearRequest() {
+  if (!requestUrl) return;
+  URL.revokeObjectURL(requestUrl);
+  requestUrl = undefined;
+  result.replaceChildren();
+}
+
+form?.addEventListener('input', clearRequest);
+form?.addEventListener('change', clearRequest);
+
 form?.addEventListener('submit', (event) => {
   event.preventDefault();
   if (place && !place.value.trim()) {
@@ -96,13 +122,11 @@ form?.addEventListener('submit', (event) => {
     if (value) lines.push(`${control.labels[0].querySelector('span').textContent} — ${value}`);
   }
   const file = new Blob(['\ufeff', form.dataset.title, '\n\n', lines.join('\n'), '\n'], { type: 'text/plain;charset=utf-8' });
-  if (requestUrl) URL.revokeObjectURL(requestUrl);
+  clearRequest();
   requestUrl = URL.createObjectURL(file);
   const download = document.createElement('a');
   download.href = requestUrl;
   download.download = 'cabin-request.txt';
   download.textContent = form.dataset.download;
-  const result = form.querySelector('[data-result]');
   result.replaceChildren(form.dataset.ready, download);
-  result.hidden = false;
 });
