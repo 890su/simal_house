@@ -71,6 +71,16 @@ b,strong{font-weight:700}
 .langs a[aria-current]{background:var(--ink);color:var(--sheet)}
 .langs a:not([aria-current]):hover{background:var(--paper-2)}
 .btn-wa{min-height:44px;padding:0 14px}
+.navdrop{display:none;position:relative}
+.navdrop summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:2px solid var(--ink);border-radius:var(--radius);font-weight:700;font-size:.9rem;cursor:pointer;list-style:none;user-select:none}
+.navdrop summary::-webkit-details-marker{display:none}
+.navdrop summary svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.navdrop[open] summary{background:var(--ink);color:var(--sheet)}
+.navdrop nav{position:absolute;right:0;top:calc(100% + 8px);min-width:min(260px,calc(100vw - 32px));display:flex;flex-direction:column;background:var(--sheet);border:2px solid var(--ink);border-radius:var(--radius);box-shadow:0 10px 28px rgb(22 32 27/.16);overflow:hidden}
+.navdrop nav a{padding:13px 16px;font-weight:700;text-decoration:none}
+.navdrop nav a+a{border-top:1px solid var(--rule,#d5dacf)}
+.navdrop nav a:hover{background:var(--paper)}
+.navdrop nav a[aria-current]{box-shadow:inset 4px 0 0 var(--route)}
 
 /* hero: a map sheet */
 .hero{position:relative;padding-block:clamp(32px,5vw,72px) clamp(28px,4vw,48px);background:
@@ -372,6 +382,7 @@ details p{padding:0 40px 18px 0;color:var(--ink-2)}
 /* responsive */
 @media (max-width:1100px){
   .menu{display:none}
+  .navdrop{display:block}
   .top-act{margin-left:auto}
   .model{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
   .model-plan{grid-column:2;grid-row:1}
@@ -390,7 +401,12 @@ details p{padding:0 40px 18px 0;color:var(--ink-2)}
 }
 @media (max-width:760px){
   body{font-size:16px}
-  .btn-wa span{display:none}
+  .top .btn-wa{display:none}
+  .top-in{gap:10px}
+  .top-act{gap:8px}
+  .langs a{min-width:40px;padding:0 4px}
+  .navdrop summary{padding:0 10px}
+  .navdrop summary span{display:none}
   .btn-wa{padding:0 10px}
   .brand span{font-size:1rem}
   .inset img{aspect-ratio:4/3}
@@ -423,9 +439,13 @@ details p{padding:0 40px 18px 0;color:var(--ink-2)}
   .dock.is-hidden{transform:translateY(110%)}
   details p{padding-right:0}
 }
+@media (max-width:400px){
+  .langs a{min-width:36px}
+  .brand{gap:6px}
+  .brand span{font-size:.9rem}
+}
 @media (max-width:380px){
   .signs{grid-template-columns:1fr}
-  .langs a{min-width:40px;padding:0 4px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}

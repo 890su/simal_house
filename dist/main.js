@@ -248,3 +248,11 @@ if (dock && request && 'IntersectionObserver' in window) {
 for (const link of document.querySelectorAll('.langs a')) {
   link.addEventListener('click', () => { if (location.hash) link.hash = location.hash; });
 }
+
+// header menu under 1100px: close on choice, outside click, Escape
+document.querySelectorAll(".navdrop").forEach((d) => {
+  d.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { d.open = false; }));
+  document.addEventListener("click", (e) => { if (d.open && !d.contains(e.target)) d.open = false; });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && d.open) { d.open = false; d.querySelector("summary").focus(); } });
+});
+

@@ -119,12 +119,14 @@ function specList(m, c, lang, { withPrice = true } = {}) {
 function header(c, lang, page) {
   const home = page === 'garden' ? '' : pageHref(lang, lang, 'garden');
   const nav = [[`${home}#models`, c.nav.models], [`${home}#price`, c.nav.price], [`${home}#delivery`, c.nav.delivery], [pageHref(lang, lang, 'business'), c.nav.business, page === 'business'], [pageHref(lang, lang, 'property'), c.nav.property, page === 'property']];
+  const navLinks = nav.map(([href, label, current]) => `<a href="${href}"${current ? ' aria-current="page"' : ''}>${label}</a>`).join('');
   const wa = contactHref('whatsapp');
   return `<header class="top"><div class="wrap top-in">
     <a class="brand" href="${pageHref(lang, lang, 'garden')}">${logomark}<span>${c.brand}</span></a>
-    <nav class="menu" aria-label="${c.navLabel}">${nav.map(([href, label, current]) => `<a href="${href}"${current ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>
+    <nav class="menu" aria-label="${c.navLabel}">${navLinks}</nav>
     <div class="top-act">
       <nav class="langs" aria-label="${c.langLabel}">${langs.map((l) => `<a href="${pageHref(lang, l, page)}" lang="${l}" hreflang="${l}" title="${langName[l]}"${l === lang ? ' aria-current="true"' : ''}>${langShort[l]}</a>`).join('')}</nav>
+      <details class="navdrop"><summary aria-label="${c.menuLabel}"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14"/></svg><span>${c.menuLabel}</span></summary><nav aria-label="${c.navLabel}">${navLinks}</nav></details>
       <a class="btn btn-line btn-wa" href="${wa}"${external(wa)} data-event="contact_whatsapp">${icon.whatsapp}<span>${c.whatsapp}</span></a>
     </div>
   </div></header>`;

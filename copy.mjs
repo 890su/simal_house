@@ -3,7 +3,7 @@
 
 export const copy = {
   ru: {
-    brand: 'Двор и Дом', skip: 'К содержанию', navLabel: 'Разделы', langLabel: 'Язык',
+    brand: 'Двор и Дом', skip: 'К содержанию', navLabel: 'Разделы', menuLabel: 'Меню', langLabel: 'Язык',
     nav: { models: 'Модели', price: 'Цена', delivery: 'Доставка', business: 'Для бизнеса', property: 'Дом с участком' },
     whatsapp: 'WhatsApp', telegram: 'Telegram', call: 'Позвонить', write: 'Написать',
     render: 'Визуализация', schematic: 'Схема по плану производителя', source: 'Каталог производителя, стр.',
@@ -165,7 +165,7 @@ export const copy = {
   },
 
   en: {
-    brand: 'Yard & House', skip: 'Skip to content', navLabel: 'Sections', langLabel: 'Language',
+    brand: 'Yard & House', skip: 'Skip to content', navLabel: 'Sections', menuLabel: 'Menu', langLabel: 'Language',
     nav: { models: 'Models', price: 'Price', delivery: 'Delivery', business: 'For business', property: 'Home with land' },
     whatsapp: 'WhatsApp', telegram: 'Telegram', call: 'Call', write: 'Message us',
     render: 'Visualization', schematic: 'Schematic after the factory plan', source: 'Factory catalogue, p.',
@@ -327,7 +327,7 @@ export const copy = {
   },
 
   ka: {
-    brand: 'ეზო და სახლი', skip: 'შინაარსზე გადასვლა', navLabel: 'განყოფილებები', langLabel: 'ენა',
+    brand: 'ეზო და სახლი', skip: 'შინაარსზე გადასვლა', navLabel: 'განყოფილებები', menuLabel: 'მენიუ', langLabel: 'ენა',
     nav: { models: 'მოდელები', price: 'ფასი', delivery: 'მიტანა', business: 'ბიზნესისთვის', property: 'სახლი ნაკვეთით' },
     whatsapp: 'WhatsApp', telegram: 'Telegram', call: 'დარეკვა', write: 'მოგვწერეთ',
     render: 'ვიზუალიზაცია', schematic: 'სქემა მწარმოებლის გეგმით', source: 'მწარმოებლის კატალოგი, გვ.',
