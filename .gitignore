@@ -1,0 +1,5 @@
+_unused-assets/
+node_modules/
+.wrangler/
+.DS_Store
+Thumbs.db
