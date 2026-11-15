@@ -117,9 +117,8 @@ function specList(m, c, lang, { withPrice = true } = {}) {
 
 // ---------- shared blocks ----------
 function header(c, lang, page) {
-  const nav = page === 'garden'
-    ? [['#models', c.nav.models], ['#price', c.nav.price], ['#delivery', c.nav.delivery], [pageHref(lang, lang, 'business'), c.nav.business], [pageHref(lang, lang, 'property'), c.nav.property]]
-    : [[`${pageHref(lang, lang, 'garden')}#models`, c.nav.models], [`${pageHref(lang, lang, 'garden')}#price`, c.nav.price], [pageHref(lang, lang, 'business'), c.nav.business, page === 'business'], [pageHref(lang, lang, 'property'), c.nav.property, page === 'property']];
+  const home = page === 'garden' ? '' : pageHref(lang, lang, 'garden');
+  const nav = [[`${home}#models`, c.nav.models], [`${home}#price`, c.nav.price], [`${home}#delivery`, c.nav.delivery], [pageHref(lang, lang, 'business'), c.nav.business, page === 'business'], [pageHref(lang, lang, 'property'), c.nav.property, page === 'property']];
   const wa = contactHref('whatsapp');
   return `<header class="top"><div class="wrap top-in">
     <a class="brand" href="${pageHref(lang, lang, 'garden')}">${logomark}<span>${c.brand}</span></a>
@@ -204,7 +203,7 @@ function direct(c) {
 function footer(c, lang, page) {
   return `<footer class="foot"><div class="wrap foot-grid">
     <div><a class="brand" href="${pageHref(lang, lang, 'garden')}">${logomark}<span>${c.brand}</span></a><p>${c.footer.address}</p></div>
-    <nav aria-label="${c.navLabel}"><a href="${pageHref(lang, lang, 'garden')}#models">${c.nav.models}</a><a href="${pageHref(lang, lang, 'business')}">${c.nav.business}</a><a href="${pageHref(lang, lang, 'property')}">${c.nav.property}</a><a href="${catalogUrl}" target="_blank" rel="noopener">${c.source.replace(/,.*$/, '')}</a></nav>
+    <nav aria-label="${c.navLabel}"><a href="${pageHref(lang, lang, 'garden')}#models">${c.nav.models}</a><a href="${pageHref(lang, lang, 'garden')}#price">${c.nav.price}</a><a href="${pageHref(lang, lang, 'garden')}#delivery">${c.nav.delivery}</a><a href="${pageHref(lang, lang, 'business')}">${c.nav.business}</a><a href="${pageHref(lang, lang, 'property')}">${c.nav.property}</a><a href="${catalogUrl}" target="_blank" rel="noopener">${c.source.replace(/,.*$/, '')}</a></nav>
     <p class="foot-note">${c.footer.note}</p>
   </div></footer>
   <div class="dock" data-dock><a class="btn" href="#request" data-event="dock_request"><span>${c[page].heroCta}</span>${icon.arrow}</a><a class="btn btn-line" href="${contactHref('whatsapp')}"${external(contactHref('whatsapp'))} aria-label="${c.whatsapp}" data-event="contact_whatsapp">${icon.whatsapp}</a></div>`;
